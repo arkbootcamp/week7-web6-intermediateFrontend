@@ -1,10 +1,18 @@
 <template>
   <div class="home">
-    <div class="centered">
+    <b-container class="centered">
       <img alt="Vue logo" src="../assets/logo.png" />
       <Navbar />
-      <h1>My name is {{ name }}</h1>
-    </div>
+      <b-card>
+        <h5>Interpolation</h5>
+        <p>My name is {{ name }}</p>
+      </b-card>
+      <b-card>
+        <h5>Computed</h5>
+        <p>Original Message : {{ message }}</p>
+        <p>Reverse message : {{ reverseMessage }}</p>
+      </b-card>
+    </b-container>
   </div>
 </template>
 
@@ -20,7 +28,16 @@ export default {
   },
   data() {
     return {
-      name: 'Bagus Tri Harjanto'
+      name: 'Bagus Tri Harjanto',
+      message: 'Hello World'
+    }
+  },
+  computed: {
+    reverseMessage: function() {
+      return this.message
+        .split(' ')
+        .reverse()
+        .join(' ')
     }
   }
 }
