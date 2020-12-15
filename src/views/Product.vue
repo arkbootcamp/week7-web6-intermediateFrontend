@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="product">
     <div class="centered">
       <img alt="Vue logo" src="../assets/logo.png" />
       <Navbar />
-      <h1>My name is {{ name }}</h1>
+      <h1>This is Page Product</h1>
     </div>
   </div>
 </template>
@@ -13,15 +13,10 @@
 import Navbar from '../components/_base/Navbar'
 
 export default {
-  name: 'Home',
+  name: 'Product',
   // [2] step 2 mendaftarkan komponen yang sudah kita import
   components: {
     Navbar
-  },
-  data() {
-    return {
-      name: 'Bagus Tri Harjanto'
-    }
   }
 }
 </script>
