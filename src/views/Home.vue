@@ -45,6 +45,12 @@
       </b-card>
       <b-card>
         <h5>Component Comunication</h5>
+        <FormInput
+          :dataProductName="product_name"
+          @changeProductName="product_name = $event"
+        />
+        <br />
+        <label>{{ product_name }}</label>
       </b-card>
     </b-container>
   </div>
@@ -53,12 +59,14 @@
 <script>
 // [1] step pertama import komponen
 import Navbar from '../components/_base/Navbar'
+import FormInput from '../components/_base/FormInput'
 
 export default {
   name: 'Home',
   // [2] step 2 mendaftarkan komponen yang sudah kita import
   components: {
-    Navbar
+    Navbar,
+    FormInput
   },
   data() {
     return {
@@ -77,7 +85,8 @@ export default {
         }
       ],
       urlGoogle: 'http://google.com',
-      urlYoutube: 'http://youtube.com'
+      urlYoutube: 'http://youtube.com',
+      product_name: 'Sepatu Baru'
     }
   },
   computed: {
