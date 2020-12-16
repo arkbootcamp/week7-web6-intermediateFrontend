@@ -4,16 +4,33 @@
       <img alt="Vue logo" src="../assets/logo.png" />
       <Navbar />
       <h1>This is Page Product</h1>
+      <b-alert :show="alert">{{ isMsg }}</b-alert>
       <form>
-        <input type="text" placeholder="Product Name ..." />
+        <input
+          type="text"
+          v-model="form.product_name"
+          placeholder="Product Name ..."
+        />
         <br />
-        <input type="text" placeholder="Product Price ..." />
+        <input
+          type="text"
+          v-model="form.product_price"
+          placeholder="Product Price ..."
+        />
         <br />
-        <input type="text" placeholder="Category Id ..." />
+        <input
+          type="text"
+          v-model="form.category_id"
+          placeholder="Category Id ..."
+        />
         <br />
-        <input type="text" placeholder="Product Status ..." />
+        <input
+          type="text"
+          v-model="form.product_status"
+          placeholder="Product Status ..."
+        />
         <br />
-        <button type="submit">Save</button>
+        <button type="button" @click="postProduct()">Save</button>
         <button type="button">Update</button>
       </form>
       <hr />
@@ -38,9 +55,11 @@
             >
               <b-card-text> Rp. {{ item.product_price }} </b-card-text>
 
-              <b-button href="#" variant="primary">Add To Cart</b-button>
-              <b-button href="#" variant="success">Update</b-button>
-              <b-button href="#" variant="danger">Delete</b-button>
+              <b-button variant="primary">Add To Cart</b-button>
+              <b-button variant="success">Update</b-button>
+              <b-button variant="danger" @click="deleteProduct(item.product_id)"
+                >Delete</b-button
+              >
             </b-card>
           </b-col>
         </b-row>
@@ -60,7 +79,15 @@ export default {
   },
   data() {
     return {
-      products: []
+      products: [],
+      form: {
+        product_name: '',
+        category_id: '',
+        product_price: '',
+        product_status: ''
+      },
+      alert: false,
+      isMsg: ''
     }
   },
   created() {
@@ -69,7 +96,7 @@ export default {
   methods: {
     getProduct() {
       axios
-        .get('http://localhost:3000/product?page=1&limit=4')
+        .get('http://localhost:3000/product?page=1&limit=10')
         .then(response => {
           console.log(response)
           this.products = response.data.data
@@ -77,6 +104,23 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    postProduct() {
+      console.log(this.form)
+      axios
+        .post('http://localhost:3000/product', this.form)
+        .then(response => {
+          console.log(response)
+          this.alert = true
+          this.isMsg = response.data.msg
+          this.getProduct()
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    },
+    deleteProduct(product_id) {
+      console.log(product_id)
     }
   }
 }

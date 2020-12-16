@@ -45,9 +45,13 @@
       </b-card>
       <b-card>
         <h5>Component Comunication</h5>
-        <FormInput
+        <!-- <FormInput
           :dataProductName="product_name"
           @changeProductName="product_name = $event"
+        /> -->
+        <FormInput
+          :dataProductName="product_name"
+          @changeProductName="changeNameProduct"
         />
         <br />
         <label>{{ product_name }}</label>
@@ -105,6 +109,9 @@ export default {
     search() {
       console.log('Process Search !')
       console.log(this.searchData)
+    },
+    changeNameProduct(event) {
+      this.product_name = event
     }
   }
 }
