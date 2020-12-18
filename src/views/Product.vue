@@ -31,7 +31,7 @@
         />
         <br />
         <button type="button" @click="postProduct()">Save</button>
-        <button type="button">Update</button>
+        <button type="button" @click="patchProduct()">Update</button>
       </form>
       <hr />
       <b-container class="bv-example-row">
@@ -52,17 +52,26 @@
               tag="article"
               style="max-width: 10rem;"
               class="mb-2"
+              @click="detailProduct(item.product_id)"
             >
               <b-card-text> Rp. {{ item.product_price }} </b-card-text>
 
               <b-button variant="primary">Add To Cart</b-button>
-              <b-button variant="success">Update</b-button>
+              <b-button variant="success" @click="setProduct(item)"
+                >Update</b-button
+              >
               <b-button variant="danger" @click="deleteProduct(item.product_id)"
                 >Delete</b-button
               >
             </b-card>
           </b-col>
         </b-row>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="limit"
+          @change="handlePageChange"
+        ></b-pagination>
       </b-container>
     </div>
   </div>
@@ -77,6 +86,11 @@ export default {
   components: {
     Navbar
   },
+  computed: {
+    rows() {
+      return this.totalRows
+    }
+  },
   data() {
     return {
       products: [],
@@ -87,7 +101,12 @@ export default {
         product_status: ''
       },
       alert: false,
-      isMsg: ''
+      isMsg: '',
+      product_id: '',
+      currentPage: 1,
+      totalRows: null,
+      limit: 3,
+      page: 1
     }
   },
   created() {
@@ -96,9 +115,12 @@ export default {
   methods: {
     getProduct() {
       axios
-        .get('http://localhost:3000/product?page=1&limit=10')
+        .get(
+          `http://localhost:3000/product?page=${this.page}&limit=${this.limit}`
+        )
         .then(response => {
           console.log(response)
+          this.totalRows = response.data.pagination.totalData
           this.products = response.data.data
         })
         .catch(error => {
@@ -119,8 +141,40 @@ export default {
           console.log(error.response)
         })
     },
+    setProduct(data) {
+      console.log(data)
+      // this.form = {
+      //   product_name: data.product_name,
+      //   category_id: data.category_id,
+      //   product_price: data.product_price,
+      //   product_status: data.product_status
+      // }
+      this.form = data
+      this.product_id = data.product_id
+    },
+    patchProduct() {
+      console.log(this.product_id)
+      console.log(this.form)
+    },
     deleteProduct(product_id) {
       console.log(product_id)
+      axios
+        .patch(`http://localhost:3000/product/deleteProduct/${product_id}`)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    },
+    handlePageChange(numberPage) {
+      console.log(numberPage)
+      this.page = numberPage
+      this.getProduct()
+    },
+    detailProduct(product_id) {
+      console.log(product_id)
+      this.$router.push({ name: 'productDetail', params: { id: product_id } })
     }
   }
 }
