@@ -52,11 +52,14 @@
               tag="article"
               style="max-width: 10rem;"
               class="mb-2"
-              @click="detailProduct(item.product_id)"
             >
-              <b-card-text> Rp. {{ item.product_price }} </b-card-text>
+              <b-card-text @click="detailProduct(item.product_id)">
+                Rp. {{ item.product_price }}
+              </b-card-text>
 
-              <b-button variant="primary">Add To Cart</b-button>
+              <b-button variant="primary" @click="addToCart(item)"
+                >Add To Cart</b-button
+              >
               <b-button variant="success" @click="setProduct(item)"
                 >Update</b-button
               >
@@ -106,11 +109,19 @@ export default {
       currentPage: 1,
       totalRows: null,
       limit: 3,
-      page: 1
+      page: 1,
+      cart: []
     }
   },
   created() {
     this.getProduct()
+    let getCart = localStorage.getItem('cart')
+    getCart = JSON.parse(getCart)
+    if (getCart) {
+      this.cart = getCart
+    } else {
+      this.cart = []
+    }
   },
   methods: {
     getProduct() {
@@ -175,6 +186,18 @@ export default {
     detailProduct(product_id) {
       console.log(product_id)
       this.$router.push({ name: 'productDetail', params: { id: product_id } })
+    },
+    addToCart(data) {
+      const setCart = {
+        product_id: data.product_id,
+        product_name: data.product_name,
+        product_price: data.product_price,
+        product_qty: 1,
+        product_total: data.product_price
+      }
+      this.cart = [...this.cart, setCart]
+      localStorage.setItem('cart', JSON.stringify(this.cart))
+      console.log(this.cart)
     }
   }
 }
