@@ -2,12 +2,12 @@
   <p align="center">
     <a href="link_deploy">View Demo</a>
     ·
-    <a href="https://github.com/Bagusth15/team-project/issues">Report Bug</a>
+    <a href="https://github.com/arkbootcamp/week7-web6-intermediateFrontend">Report Bug</a>
     ·
-    <a href="https://github.com/Bagusth15/team-project/issues">Request Feature</a>
+    <a href="https://github.com/arkbootcamp/week7-web6-intermediateFrontend">Request Feature</a>
   </p>
 
-![Image Banner](https://raw.githubusercontent.com/Bagusth15/team-project/master/image_banner.jpg)
+![Image Banner](https://raw.githubusercontent.com/arkbootcamp/week7-web6-intermediateFrontend/main/image_banner.jpg)
 
 ## About The Project
 
