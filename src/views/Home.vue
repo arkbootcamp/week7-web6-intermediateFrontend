@@ -3,6 +3,7 @@
     <b-container class="centered">
       <img alt="Vue logo" src="../assets/logo.png" />
       <Navbar />
+      <h1>Hello {{ user.user_name }}</h1>
       <b-card>
         <h5>Interpolation</h5>
         <p>My name is {{ name }}</p>
@@ -64,6 +65,7 @@
 // [1] step pertama import komponen
 import Navbar from '../components/_base/Navbar'
 import FormInput from '../components/_base/FormInput'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -99,7 +101,8 @@ export default {
         .split(' ')
         .reverse()
         .join(' ')
-    }
+    },
+    ...mapGetters({ user: 'setUser' })
   },
   methods: {
     boom() {

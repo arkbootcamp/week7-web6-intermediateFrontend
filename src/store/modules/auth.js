@@ -80,6 +80,9 @@ export default {
     }
   },
   getters: {
+    setUser(state) {
+      return state.user
+    },
     isLogin(state) {
       return state.token !== null
     }
