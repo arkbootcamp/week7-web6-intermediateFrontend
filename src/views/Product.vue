@@ -4,6 +4,7 @@
       <img alt="Vue logo" src="../assets/logo.png" />
       <Navbar />
       <h1>This is Page Product</h1>
+      <h3>{{ allData.page }}</h3>
       <b-alert :show="alert">{{ isMsg }}</b-alert>
       <form>
         <input
@@ -23,6 +24,8 @@
           v-model="form.category_id"
           placeholder="Category Id ..."
         />
+        <br />
+        <input type="file" @change="handleFile" />
         <br />
         <input
           type="text"
@@ -46,7 +49,7 @@
           >
             <b-card
               v-bind:title="item.product_name"
-              img-src="https://picsum.photos/600/300/?image=25"
+              :img-src="'http://localhost:3000/' + item.product_image"
               img-alt="Image"
               img-top
               tag="article"
@@ -81,6 +84,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import axios from 'axios'
 
@@ -90,31 +94,39 @@ export default {
     Navbar
   },
   computed: {
-    rows() {
-      return this.totalRows
-    }
+    ...mapGetters({
+      products: 'getDataProduct',
+      page: 'getPageProduct',
+      limit: 'getLimitProduct',
+      rows: 'getTotalRowsProduct',
+      allData: 'getAllDataState'
+    })
+    // rows() {
+    //   return this.totalRows
+    // }
   },
   data() {
     return {
-      products: [],
+      // products: [],
       form: {
         product_name: '',
         category_id: '',
         product_price: '',
-        product_status: ''
+        product_status: '',
+        product_image: ''
       },
       alert: false,
       isMsg: '',
       product_id: '',
       currentPage: 1,
-      totalRows: null,
-      limit: 3,
-      page: 1,
+      // totalRows: null,
+      // limit: 3,
+      // page: 1,
       cart: []
     }
   },
   created() {
-    this.getProduct()
+    this.getProducts() // tambahkan
     let getCart = localStorage.getItem('cart')
     getCart = JSON.parse(getCart)
     if (getCart) {
@@ -124,33 +136,52 @@ export default {
     }
   },
   methods: {
-    getProduct() {
-      axios
-        .get(
-          `http://localhost:3000/product?page=${this.page}&limit=${this.limit}`
-        )
-        .then(response => {
-          console.log(response)
-          this.totalRows = response.data.pagination.totalData
-          this.products = response.data.data
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
-    },
+    ...mapActions(['getProducts']), // tambahkan
+    ...mapMutations(['changePage']),
+    // getProduct() {
+    // axios
+    //   .get(
+    //     `http://localhost:3000/product?page=${this.page}&limit=${this.limit}`
+    //   )
+    //   .then(response => {
+    //     console.log(response)
+    //     this.totalRows = response.data.pagination.totalData
+    //     this.products = response.data.data
+    //   })
+    //   .catch(error => {
+    //     console.log(error.response)
+    //   })
+    // },
     postProduct() {
       console.log(this.form)
-      axios
-        .post('http://localhost:3000/product', this.form)
-        .then(response => {
-          console.log(response)
-          this.alert = true
-          this.isMsg = response.data.msg
-          this.getProduct()
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
+      const {
+        product_name,
+        product_price,
+        product_status,
+        category_id,
+        product_image
+      } = this.form
+      const data = new FormData()
+      data.append('product_name', product_name)
+      data.append('product_price', product_price)
+      data.append('product_status', product_status)
+      data.append('category_id', category_id)
+      data.append('product_image', product_image)
+      // untuk pengecekan saja
+      for (var pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
+      }
+      // axios
+      //   .post('http://localhost:3000/product', data)
+      //   .then(response => {
+      //     console.log(response)
+      //     this.alert = true
+      //     this.isMsg = response.data.msg
+      //     // this.getProduct()
+      //   })
+      //   .catch(error => {
+      //     console.log(error.response)
+      //   })
     },
     setProduct(data) {
       console.log(data)
@@ -179,9 +210,10 @@ export default {
         })
     },
     handlePageChange(numberPage) {
-      console.log(numberPage)
-      this.page = numberPage
-      this.getProduct()
+      // console.log(numberPage)
+      // this.page = numberPage
+      this.changePage(numberPage)
+      this.getProducts()
     },
     detailProduct(product_id) {
       console.log(product_id)
@@ -198,6 +230,10 @@ export default {
       this.cart = [...this.cart, setCart]
       localStorage.setItem('cart', JSON.stringify(this.cart))
       console.log(this.cart)
+    },
+    handleFile(event) {
+      console.log(event)
+      this.form.product_image = event.target.files[0]
     }
   }
 }
