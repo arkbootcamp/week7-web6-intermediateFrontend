@@ -4,7 +4,6 @@
       <img alt="Vue logo" src="../assets/logo.png" />
       <Navbar />
       <h1>This is Page Product</h1>
-      <h3>{{ allData.page }}</h3>
       <b-alert :show="alert">{{ isMsg }}</b-alert>
       <form>
         <input
@@ -78,6 +77,7 @@
           :per-page="limit"
           @change="handlePageChange"
         ></b-pagination>
+        <button @click="resetPage()">Reset Page</button>
       </b-container>
     </div>
   </div>
@@ -98,9 +98,16 @@ export default {
       products: 'getDataProduct',
       page: 'getPageProduct',
       limit: 'getLimitProduct',
-      rows: 'getTotalRowsProduct',
-      allData: 'getAllDataState'
-    })
+      rows: 'getTotalRowsProduct'
+    }),
+    currentPage: {
+      get() {
+        return this.page
+      },
+      set(newPage) {
+        return newPage
+      }
+    }
     // rows() {
     //   return this.totalRows
     // }
@@ -118,7 +125,6 @@ export default {
       alert: false,
       isMsg: '',
       product_id: '',
-      currentPage: 1,
       // totalRows: null,
       // limit: 3,
       // page: 1,
@@ -137,7 +143,7 @@ export default {
   },
   methods: {
     ...mapActions(['getProducts']), // tambahkan
-    ...mapMutations(['changePage']),
+    ...mapMutations(['changePage', 'resetPages']),
     // getProduct() {
     // axios
     //   .get(
@@ -211,7 +217,6 @@ export default {
     },
     handlePageChange(numberPage) {
       // console.log(numberPage)
-      // this.page = numberPage
       this.changePage(numberPage)
       this.getProducts()
     },
@@ -234,6 +239,10 @@ export default {
     handleFile(event) {
       console.log(event)
       this.form.product_image = event.target.files[0]
+    },
+    resetPage() {
+      this.resetPages()
+      this.getProducts()
     }
   }
 }

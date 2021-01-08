@@ -16,6 +16,10 @@ export default {
     },
     changePage(state, payload) {
       state.page = payload
+    },
+    resetPages(state) {
+      state.page = 1
+      console.log(state.page)
     }
   },
   actions: {
@@ -51,9 +55,6 @@ export default {
     },
     getTotalRowsProduct(state) {
       return state.totalRows
-    },
-    getAllDataState(state) {
-      return state
     }
   }
 }
