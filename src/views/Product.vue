@@ -80,6 +80,12 @@
         <button @click="resetPage()">Reset Page</button>
       </b-container>
     </div>
+    <h1>Vue Card Stack</h1>
+    <vue-card-stack v-if="isShow" :cards="products">
+      <template v-slot:card="{ card }">
+        <h3>{{ card.product_name }}</h3>
+      </template>
+    </vue-card-stack>
   </div>
 </template>
 
@@ -87,18 +93,21 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import axios from 'axios'
+import VueCardStack from 'vue-card-stack'
 
 export default {
   name: 'Product',
   components: {
-    Navbar
+    Navbar,
+    VueCardStack
   },
   computed: {
     ...mapGetters({
       products: 'getDataProduct',
       page: 'getPageProduct',
       limit: 'getLimitProduct',
-      rows: 'getTotalRowsProduct'
+      rows: 'getTotalRowsProduct',
+      isShow: 'getShow'
     }),
     currentPage: {
       get() {

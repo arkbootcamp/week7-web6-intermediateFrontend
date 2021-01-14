@@ -5,12 +5,14 @@ export default {
     limit: 3,
     page: 1,
     products: [],
-    totalRows: null
+    totalRows: null,
+    isShow: false
   },
   mutations: {
     // tambahkan
     setProduct(state, payload) {
       // payload = response.data
+      state.isShow = true
       state.products = payload.data
       state.totalRows = payload.pagination.totalData
     },
@@ -55,6 +57,9 @@ export default {
     },
     getTotalRowsProduct(state) {
       return state.totalRows
+    },
+    getShow(state) {
+      return state.isShow
     }
   }
 }
