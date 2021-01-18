@@ -42,6 +42,17 @@ VUE_APP_ENDPOINT = [Backend API]
 - [Axios](https://www.npmjs.com/package/axios)
 - [Vuex](https://vuex.vuejs.org/)
 
-## License
+## License - untuk project individu
 
 © [Bagus Tri Harjanto](https://github.com/bagusth15/)
+
+## Team - untuk project team
+
+> All Members of Default Team
+
+| <a href="#" target="_blank">**Full-Stack Developer & Team Leader**</a> | <a href="#" target="_blank">**Front-End Developer**</a> | <a href="#" target="_blank">**Front-End Developer**</a> | <a href="#" target="_blank">**Back-End Developer**</a> | <a href="#" target="_blank">**Back-End Developer**</a> | 
+| :---: |:---:| :---:|:---:| :---:|
+| [![Full-Stack Developer Image](https://avatars1.githubusercontent.com/u/36648956?s=460&u=231204fcec6ae5e59f7249acf062af41d00fbc1c&v=4)](https://github.com/Bagusth15) | [![Front-End Developer Image](https://avatars1.githubusercontent.com/u/36648956?s=460&u=231204fcec6ae5e59f7249acf062af41d00fbc1c&v=4)](https://github.com/Bagusth15) | [![Front-End Developer Image](https://avatars1.githubusercontent.com/u/36648956?s=460&u=231204fcec6ae5e59f7249acf062af41d00fbc1c&v=4)](https://github.com/Bagusth15) | [![Back-End Developer Image](https://avatars1.githubusercontent.com/u/36648956?s=460&u=231204fcec6ae5e59f7249acf062af41d00fbc1c&v=4)](https://github.com/Bagusth15) | [![Back-End Developer Image](https://avatars1.githubusercontent.com/u/36648956?s=460&u=231204fcec6ae5e59f7249acf062af41d00fbc1c&v=4)](https://github.com/Bagusth15) |
+| <a href="https://github.com/Bagusth15" target="_blank">`https://github.com/Bagusth15`</a> | <a href="https://github.com/link_github_frontend" target="_blank">`https://github.com/link_github_frontend`</a> | <a href="https://github.com/link_github_frontend" target="_blank">`https://github.com/link_github_frontend`</a> | <a href="https://github.com/link_github_backend" target="_blank">`https://github.com/link_github_backend`</a> | <a href="https://github.com/link_github_backend" target="_blank">`https://github.com/link_github_backend`</a> |
+
+---
