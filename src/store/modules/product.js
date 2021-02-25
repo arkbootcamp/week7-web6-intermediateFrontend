@@ -29,7 +29,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/product?page=${context.state.page}&limit=${context.state.limit}`
+            `http://localhost:3000/api1/product?page=${context.state.page}&limit=${context.state.limit}`
           )
           .then(response => {
             console.log(response)

@@ -20,11 +20,12 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/user/login', payload)
+          .post('http://localhost:3000/api1/user/login', payload)
           .then(result => {
             // console.log(result)
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)
+            localStorage.setItem('refreshToken', result.data.data.refreshToken)
             resolve(result)
           })
           .catch(error => {
@@ -35,6 +36,7 @@ export default {
     },
     logout(context) {
       localStorage.removeItem('token')
+      localStorage.removeItem('refreshToken')
       localStorage.removeItem('cart')
       context.commit('delUser')
       router.push('/login')
@@ -64,15 +66,37 @@ export default {
         function(error) {
           // Any status codes that falls outside the range of 2xx cause this function to trigger
           // Do something with response error
-          if (
-            error.response.data.status === 403 &&
-            (error.response.data.msg === 'invalid token' ||
+          if (error.response.data.status === 403) {
+            if (
+              error.response.data.msg === 'invalid token' ||
               error.response.data.msg === 'invalid signature' ||
-              error.response.data.msg === 'jwt expired' ||
-              error.response.data.msg === 'jwt malformed')
-          ) {
-            context.dispatch('logout')
-            alert(error.response.data.msg)
+              error.response.data.msg === 'jwt malformed'
+            ) {
+              context.dispatch('logout')
+              alert(error.response.data.msg)
+            } else if (error.response.data.msg === 'jwt expired') {
+              const setData = {
+                userId: context.state.user.user_id,
+                refreshToken: localStorage.getItem('refreshToken') // atau refreshToken: context.state.user.refreshToken
+              }
+              axios
+                .post('http://localhost:3000/api1/user/refresh', setData)
+                .then(result => {
+                  localStorage.removeItem('token')
+                  localStorage.removeItem('refreshToken')
+                  localStorage.setItem('token', result.data.data.token)
+                  localStorage.setItem(
+                    'refreshToken',
+                    result.data.data.refreshToken
+                  )
+                  context.commit('setUser', result.data.data)
+                  location.reload()
+                })
+                .catch(error => {
+                  context.dispatch('logout')
+                  alert(error.response.data.msg)
+                })
+            }
           }
           return Promise.reject(error)
         }

@@ -48,7 +48,7 @@
           >
             <b-card
               v-bind:title="item.product_name"
-              :img-src="'http://localhost:3000/' + item.product_image"
+              :img-src="'http://localhost:3000/api1/fileUploadsApi1/' + item.product_image"
               img-alt="Image"
               img-top
               tag="article"
@@ -156,7 +156,7 @@ export default {
     // getProduct() {
     // axios
     //   .get(
-    //     `http://localhost:3000/product?page=${this.page}&limit=${this.limit}`
+    //     `http://localhost:3000/api1/product?page=${this.page}&limit=${this.limit}`
     //   )
     //   .then(response => {
     //     console.log(response)
@@ -187,7 +187,7 @@ export default {
         console.log(pair[0] + ', ' + pair[1])
       }
       // axios
-      //   .post('http://localhost:3000/product', data)
+      //   .post('http://localhost:3000/api1/product', data)
       //   .then(response => {
       //     console.log(response)
       //     this.alert = true
@@ -216,7 +216,7 @@ export default {
     deleteProduct(product_id) {
       console.log(product_id)
       axios
-        .patch(`http://localhost:3000/product/deleteProduct/${product_id}`)
+        .patch(`http://localhost:3000/api1/product/deleteProduct/${product_id}`)
         .then(response => {
           console.log(response)
         })
